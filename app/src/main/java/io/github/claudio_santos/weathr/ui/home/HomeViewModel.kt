@@ -114,11 +114,6 @@ class HomeViewModel @Inject constructor(
         ) == PackageManager.PERMISSION_GRANTED
     }
 
-    fun onGpsRequested() {
-        if (!hasLocationPermission()) return
-        getGpsLocation()
-    }
-
     fun onGpsPermissionGranted() {
         getGpsLocation()
     }

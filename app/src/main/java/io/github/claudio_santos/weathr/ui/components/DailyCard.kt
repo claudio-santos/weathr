@@ -3,7 +3,6 @@ package io.github.claudio_santos.weathr.ui.components
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -13,9 +12,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.outlined.Air
-import androidx.compose.material.icons.outlined.Umbrella
+
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
@@ -24,11 +21,15 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import compose.icons.WeatherIcons
+import compose.icons.weathericons.*
 import io.github.claudio_santos.weathr.R
+import io.github.claudio_santos.weathr.util.toWindRotation
+import io.github.claudio_santos.weathr.util.windUnitLabel
 import io.github.claudio_santos.weathr.domain.model.DailyForecast
 import io.github.claudio_santos.weathr.domain.model.HourlyData
 import io.github.claudio_santos.weathr.util.wmoDescriptionRes
@@ -45,13 +46,7 @@ fun DailyCard(
     onClick: () -> Unit = {},
     modifier: Modifier = Modifier
 ) {
-    val windUnitLabel = when (windSpeedUnit) {
-        "kmh" -> "km/h"
-        "ms" -> "m/s"
-        "mph" -> "mph"
-        "kn" -> "kn"
-        else -> windSpeedUnit
-    }
+    val windUnitLabel = windSpeedUnit.windUnitLabel()
 
     Card(
         modifier = modifier
@@ -86,9 +81,9 @@ fun DailyCard(
                     Spacer(Modifier.height(6.dp))
                     Row(verticalAlignment = Alignment.CenterVertically) {
                         Icon(
-                            Icons.Outlined.Umbrella,
+                            WeatherIcons.Raindrop,
                             contentDescription = null,
-                            modifier = Modifier.size(14.dp),
+                            modifier = Modifier.size(16.dp),
                             tint = MaterialTheme.colorScheme.primary
                         )
                         Spacer(Modifier.width(3.dp))
@@ -101,9 +96,9 @@ fun DailyCard(
                     Spacer(Modifier.height(2.dp))
                     Row(verticalAlignment = Alignment.CenterVertically) {
                         Icon(
-                            Icons.Outlined.Air,
+                            WeatherIcons.WindDeg,
                             contentDescription = null,
-                            modifier = Modifier.size(14.dp),
+                            modifier = Modifier.size(16.dp).rotate(forecast.windDirection.toWindRotation()),
                             tint = MaterialTheme.colorScheme.primary
                         )
                         Spacer(Modifier.width(3.dp))

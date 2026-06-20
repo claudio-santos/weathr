@@ -25,7 +25,7 @@ class HistoricalForecastApi @Inject constructor(
             parameter("longitude", longitude)
             parameter("start_date", startDate)
             parameter("end_date", endDate)
-            parameter("daily", "weather_code,apparent_temperature_max,apparent_temperature_min,precipitation_probability_max,wind_speed_10m_max,sunrise,sunset")
+            parameter("daily", "weather_code,apparent_temperature_max,apparent_temperature_min,precipitation_probability_max,wind_speed_10m_max,wind_direction_10m_dominant,sunrise,sunset")
             parameter("timezone", "auto")
             parameter("temperature_unit", temperatureUnit)
             parameter("wind_speed_unit", windSpeedUnit)

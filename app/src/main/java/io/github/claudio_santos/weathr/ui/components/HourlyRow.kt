@@ -2,15 +2,19 @@ package io.github.claudio_santos.weathr.ui.components
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.lazy.rememberLazyListState
+
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -18,22 +22,16 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import compose.icons.WeatherIcons
+import compose.icons.weathericons.*
 import io.github.claudio_santos.weathr.domain.model.HourlyData
+import io.github.claudio_santos.weathr.util.toWindRotation
+import io.github.claudio_santos.weathr.util.windUnitLabel
 import java.time.LocalDateTime
-
-private fun windArrow(degrees: Double): String = when {
-    degrees < 22.5 || degrees >= 337.5 -> "\u2191"
-    degrees < 67.5 -> "\u2197"
-    degrees < 112.5 -> "\u2192"
-    degrees < 157.5 -> "\u2198"
-    degrees < 202.5 -> "\u2193"
-    degrees < 247.5 -> "\u2199"
-    degrees < 292.5 -> "\u2190"
-    else -> "\u2196"
-}
 
 @Composable
 fun HourlyRow(
@@ -43,15 +41,7 @@ fun HourlyRow(
     scrollToHour: Int? = null,
     windSpeedUnit: String = "kmh"
 ) {
-    val windUnitLabel = remember(windSpeedUnit) {
-        when (windSpeedUnit) {
-            "kmh" -> "km/h"
-            "ms" -> "m/s"
-            "mph" -> "mph"
-            "kn" -> "kn"
-            else -> windSpeedUnit
-        }
-    }
+    val windUnitLabel = windSpeedUnit.windUnitLabel()
 
     val filtered = remember(hourlyForecast) {
         hourlyForecast.filterIndexed { index, _ -> index % 2 == 0 }
@@ -111,7 +101,6 @@ fun HourlyRow(
 @Composable
 private fun HourCard(hour: HourlyData, isCurrent: Boolean = false, windUnitLabel: String = "km/h") {
     val time = hour.time.substringAfter("T").take(5)
-    val arrow = windArrow(hour.windDirection)
 
     Card(
         colors = CardDefaults.cardColors(
@@ -146,19 +135,37 @@ private fun HourCard(hour: HourlyData, isCurrent: Boolean = false, windUnitLabel
                 textAlign = TextAlign.Center
             )
             Spacer(Modifier.height(2.dp))
-            Text(
-                text = hour.precipitationProbability?.let { "${it.toInt()}%" } ?: "-",
-                style = MaterialTheme.typography.labelSmall,
-                color = MaterialTheme.colorScheme.onSurfaceVariant,
-                textAlign = TextAlign.Center
-            )
+            Row(verticalAlignment = Alignment.CenterVertically) {
+                Icon(
+                    WeatherIcons.Raindrop,
+                    contentDescription = null,
+                    modifier = Modifier.size(16.dp),
+                    tint = MaterialTheme.colorScheme.primary
+                )
+                Spacer(Modifier.width(3.dp))
+                Text(
+                    text = hour.precipitationProbability?.let { "${it.toInt()}%" } ?: "-",
+                    style = MaterialTheme.typography.labelSmall,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    textAlign = TextAlign.Center
+                )
+            }
             Spacer(Modifier.height(1.dp))
-            Text(
-                text = "$arrow ${hour.windSpeed.toInt()} $windUnitLabel",
-                style = MaterialTheme.typography.labelSmall,
-                color = MaterialTheme.colorScheme.onSurfaceVariant,
-                textAlign = TextAlign.Center
-            )
+            Row(verticalAlignment = Alignment.CenterVertically) {
+                Icon(
+                    WeatherIcons.WindDeg,
+                    contentDescription = null,
+                    modifier = Modifier.size(16.dp).rotate(hour.windDirection.toWindRotation()),
+                    tint = MaterialTheme.colorScheme.primary
+                )
+                Spacer(Modifier.width(3.dp))
+                Text(
+                    text = "${hour.windSpeed.toInt()} $windUnitLabel",
+                    style = MaterialTheme.typography.labelSmall,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    textAlign = TextAlign.Center
+                )
+            }
         }
     }
 }

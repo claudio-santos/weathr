@@ -76,6 +76,7 @@ data class DailyUnits(
     @SerialName("apparent_temperature_min") val apparentTemperatureMin: String? = null,
     @SerialName("precipitation_probability_max") val precipitationProbabilityMax: String? = null,
     @SerialName("wind_speed_10m_max") val windSpeed10mMax: String,
+    @SerialName("wind_direction_10m_dominant") val windDirection10mDominant: String? = null,
     val sunrise: String,
     val sunset: String
 )
@@ -88,6 +89,7 @@ data class DailyData(
     @SerialName("apparent_temperature_min") val apparentTemperatureMin: List<Double>? = null,
     @SerialName("precipitation_probability_max") val precipitationProbabilityMax: List<Double>? = null,
     @SerialName("wind_speed_10m_max") val windSpeed10mMax: List<Double>,
+    @SerialName("wind_direction_10m_dominant") val windDirection10mDominant: List<Double>? = null,
     val sunrise: List<String>,
     val sunset: List<String>
 )

@@ -12,7 +12,6 @@ import androidx.datastore.preferences.preferencesDataStore
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.distinctUntilChanged
-import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
 import java.util.Locale
 import javax.inject.Inject
@@ -77,9 +76,4 @@ class Preferences @Inject constructor(
     suspend fun setHistoricalCache(json: String) { context.cacheDataStore.edit { it[CacheKeys.HISTORICAL_CACHE] = json } }
     suspend fun setLastFetchTimestamp(ts: Long) { context.cacheDataStore.edit { it[CacheKeys.LAST_FETCH_TIMESTAMP] = ts } }
     suspend fun setThemeMode(mode: String) { context.dataStore.edit { it[PrefKeys.THEME_MODE] = mode } }
-
-    suspend fun isLocationSet(): Boolean {
-        val lat = context.dataStore.data.first()[PrefKeys.LATITUDE]
-        return lat != null
-    }
 }

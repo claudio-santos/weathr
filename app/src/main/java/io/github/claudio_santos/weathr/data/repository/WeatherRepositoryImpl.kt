@@ -13,7 +13,6 @@ import io.github.claudio_santos.weathr.domain.model.Weather
 import io.github.claudio_santos.weathr.util.Preferences
 import kotlinx.coroutines.flow.first
 import kotlinx.serialization.json.Json
-import kotlinx.serialization.decodeFromString
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -107,16 +106,18 @@ class WeatherRepositoryImpl @Inject constructor(
         )
 
         val dailyForecasts = daily?.let { d ->
-            d.time.mapIndexed { index, date ->
+            d.time.drop(1).mapIndexed { index, date ->
+                val i = index + 1
                 DailyForecast(
                     date = date,
-                    weatherCode = d.weatherCode.getOrElse(index) { 0 },
-                    tempMax = d.apparentTemperatureMax?.getOrElse(index) { 0.0 } ?: 0.0,
-                    tempMin = d.apparentTemperatureMin?.getOrElse(index) { 0.0 } ?: 0.0,
-                    precipitationProbabilityMax = d.precipitationProbabilityMax?.getOrElse(index) { null },
-                    windSpeedMax = d.windSpeed10mMax.getOrElse(index) { 0.0 },
-                    sunrise = d.sunrise.getOrElse(index) { "" },
-                    sunset = d.sunset.getOrElse(index) { "" }
+                    weatherCode = d.weatherCode.getOrElse(i) { 0 },
+                    tempMax = d.apparentTemperatureMax?.getOrElse(i) { 0.0 } ?: 0.0,
+                    tempMin = d.apparentTemperatureMin?.getOrElse(i) { 0.0 } ?: 0.0,
+                    precipitationProbabilityMax = d.precipitationProbabilityMax?.getOrElse(i) { null },
+                    windSpeedMax = d.windSpeed10mMax.getOrElse(i) { 0.0 },
+                    windDirection = d.windDirection10mDominant?.getOrElse(i) { 0.0 } ?: 0.0,
+                    sunrise = d.sunrise.getOrElse(i) { "" },
+                    sunset = d.sunset.getOrElse(i) { "" }
                 )
             }
         } ?: emptyList()
@@ -134,6 +135,7 @@ class WeatherRepositoryImpl @Inject constructor(
                 tempMin = d.apparentTemperatureMin?.getOrElse(index) { 0.0 } ?: 0.0,
                 precipitationProbabilityMax = d.precipitationProbabilityMax?.getOrElse(index) { null },
                 windSpeedMax = d.windSpeed10mMax.getOrElse(index) { 0.0 },
+                windDirection = d.windDirection10mDominant?.getOrElse(index) { 0.0 } ?: 0.0,
                 sunrise = d.sunrise.getOrElse(index) { "" },
                 sunset = d.sunset.getOrElse(index) { "" }
             )

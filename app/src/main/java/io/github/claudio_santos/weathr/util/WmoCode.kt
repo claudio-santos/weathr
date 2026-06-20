@@ -1,31 +1,22 @@
 package io.github.claudio_santos.weathr.util
 
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.AcUnit
-import androidx.compose.material.icons.filled.Air
-import androidx.compose.material.icons.filled.BlurOn
-import androidx.compose.material.icons.filled.Cloud
-import androidx.compose.material.icons.filled.Grain
-import androidx.compose.material.icons.filled.NightsStay
-import androidx.compose.material.icons.filled.Thunderstorm
-import androidx.compose.material.icons.filled.Umbrella
-import androidx.compose.material.icons.filled.WbCloudy
-import androidx.compose.material.icons.filled.WbSunny
 import androidx.compose.ui.graphics.vector.ImageVector
+import compose.icons.WeatherIcons
+import compose.icons.weathericons.*
 
 enum class WmoWeather(val code: IntRange, val icon: ImageVector, val nightIcon: ImageVector) {
-    CLEAR(0..0, Icons.Filled.WbSunny, Icons.Filled.NightsStay),
-    PARTLY_CLOUDY(1..2, Icons.Filled.WbCloudy, Icons.Filled.WbCloudy),
-    OVERCAST(3..3, Icons.Filled.Cloud, Icons.Filled.Cloud),
-    FOG(45..48, Icons.Filled.BlurOn, Icons.Filled.BlurOn),
-    DRIZZLE(51..55, Icons.Filled.Grain, Icons.Filled.Grain),
-    FREEZING_DRIZZLE(56..57, Icons.Filled.AcUnit, Icons.Filled.AcUnit),
-    RAIN(61..65, Icons.Filled.Umbrella, Icons.Filled.Umbrella),
-    FREEZING_RAIN(66..67, Icons.Filled.AcUnit, Icons.Filled.AcUnit),
-    SNOW(71..77, Icons.Filled.AcUnit, Icons.Filled.AcUnit),
-    RAIN_SHOWERS(80..82, Icons.Filled.Umbrella, Icons.Filled.Umbrella),
-    SNOW_SHOWERS(85..86, Icons.Filled.AcUnit, Icons.Filled.AcUnit),
-    THUNDERSTORM(95..99, Icons.Filled.Thunderstorm, Icons.Filled.Thunderstorm);
+    CLEAR(0..0, WeatherIcons.DaySunny, WeatherIcons.NightClear),
+    PARTLY_CLOUDY(1..2, WeatherIcons.DaySunnyOvercast, WeatherIcons.NightAltPartlyCloudy),
+    OVERCAST(3..3, WeatherIcons.Cloudy, WeatherIcons.Cloudy),
+    FOG(45..48, WeatherIcons.DayFog, WeatherIcons.NightFog),
+    DRIZZLE(51..55, WeatherIcons.DaySprinkle, WeatherIcons.NightAltSprinkle),
+    FREEZING_DRIZZLE(56..57, WeatherIcons.DayRainMix, WeatherIcons.NightAltRainMix),
+    RAIN(61..65, WeatherIcons.DayRain, WeatherIcons.NightAltRain),
+    FREEZING_RAIN(66..67, WeatherIcons.DaySleet, WeatherIcons.NightAltSleet),
+    SNOW(71..77, WeatherIcons.DaySnow, WeatherIcons.NightAltSnow),
+    RAIN_SHOWERS(80..82, WeatherIcons.DayShowers, WeatherIcons.NightAltShowers),
+    SNOW_SHOWERS(85..86, WeatherIcons.DaySnow, WeatherIcons.NightAltSnow),
+    THUNDERSTORM(95..99, WeatherIcons.DayThunderstorm, WeatherIcons.NightAltThunderstorm);
 
     companion object {
         fun fromCode(code: Int): WmoWeather =

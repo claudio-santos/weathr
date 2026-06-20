@@ -9,12 +9,11 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.outlined.Air
-import androidx.compose.material.icons.outlined.Thermostat
-import androidx.compose.material.icons.outlined.WaterDrop
-import androidx.compose.material.icons.outlined.WbSunny
-import androidx.compose.material.icons.outlined.WbTwilight
+import androidx.compose.ui.draw.rotate
+import compose.icons.WeatherIcons
+import compose.icons.weathericons.*
+import io.github.claudio_santos.weathr.util.toWindRotation
+import io.github.claudio_santos.weathr.util.windUnitLabel
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
@@ -38,13 +37,7 @@ fun CurrentWeatherCard(
     windSpeedUnit: String = "kmh",
     modifier: Modifier = Modifier
 ) {
-    val windUnitLabel = when (windSpeedUnit) {
-        "kmh" -> "km/h"
-        "ms" -> "m/s"
-        "mph" -> "mph"
-        "kn" -> "kn"
-        else -> windSpeedUnit
-    }
+    val windUnitLabel = windSpeedUnit.windUnitLabel()
 
     Card(
         modifier = modifier
@@ -117,16 +110,17 @@ fun CurrentWeatherCard(
                 horizontalArrangement = Arrangement.spacedBy(12.dp)
             ) {
                 DetailCard(
-                    icon = Icons.Outlined.WaterDrop,
+                    icon = WeatherIcons.Humidity,
                     value = "${weather.humidity.toInt()}%",
                     label = stringResource(R.string.humidity),
                     modifier = Modifier.weight(1f)
                 )
                 DetailCard(
-                    icon = Icons.Outlined.Air,
-                    value = "${windArrow(weather.windDirection)} ${weather.windSpeed.toInt()} $windUnitLabel",
+                    icon = WeatherIcons.WindDeg,
+                    value = "${weather.windSpeed.toInt()} $windUnitLabel",
                     label = stringResource(R.string.wind),
-                    modifier = Modifier.weight(1f)
+                    modifier = Modifier.weight(1f),
+                    rotation = weather.windDirection.toWindRotation()
                 )
             }
             Spacer(Modifier.height(8.dp))
@@ -137,7 +131,7 @@ fun CurrentWeatherCard(
                 ) {
                     if (weather.sunrise.isNotEmpty()) {
                         DetailCard(
-                            icon = Icons.Outlined.WbTwilight,
+                            icon = WeatherIcons.Sunrise,
                             value = weather.sunrise.substringAfter("T").take(5),
                             label = stringResource(R.string.sunrise),
                             modifier = Modifier.weight(1f)
@@ -145,7 +139,7 @@ fun CurrentWeatherCard(
                     }
                     if (weather.sunset.isNotEmpty()) {
                         DetailCard(
-                            icon = Icons.Outlined.WbTwilight,
+                            icon = WeatherIcons.Sunset,
                             value = weather.sunset.substringAfter("T").take(5),
                             label = stringResource(R.string.sunset),
                             modifier = Modifier.weight(1f)
@@ -157,23 +151,13 @@ fun CurrentWeatherCard(
     }
 }
 
-private fun windArrow(degrees: Double): String = when {
-    degrees < 22.5 || degrees >= 337.5 -> "\u2191"
-    degrees < 67.5 -> "\u2197"
-    degrees < 112.5 -> "\u2192"
-    degrees < 157.5 -> "\u2198"
-    degrees < 202.5 -> "\u2193"
-    degrees < 247.5 -> "\u2199"
-    degrees < 292.5 -> "\u2190"
-    else -> "\u2196"
-}
-
 @Composable
 private fun DetailCard(
     icon: ImageVector,
     value: String,
     label: String,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    rotation: Float = 0f
 ) {
     Card(
         modifier = modifier,
@@ -190,7 +174,7 @@ private fun DetailCard(
             Icon(
                 imageVector = icon,
                 contentDescription = label,
-                modifier = Modifier.size(20.dp),
+                modifier = Modifier.size(20.dp).rotate(rotation),
                 tint = MaterialTheme.colorScheme.primary
             )
             Spacer(Modifier.height(4.dp))

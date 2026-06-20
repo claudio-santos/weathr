@@ -7,6 +7,7 @@ data class DailyForecast(
     val tempMin: Double,
     val precipitationProbabilityMax: Double?,
     val windSpeedMax: Double,
+    val windDirection: Double,
     val sunrise: String?,
     val sunset: String?
 )
