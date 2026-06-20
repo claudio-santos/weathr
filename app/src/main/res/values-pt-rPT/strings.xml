@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Weathr</string>
+
+    <!-- Navigation -->
+    <string name="nav_home">Início</string>
+    <string name="nav_forecast">Previsão</string>
+    <string name="nav_past_week">Passado</string>
+    <string name="nav_settings">Definições</string>
+
+    <!-- Home -->
+    <string name="feels_like">Sensação de %d°</string>
+    <string name="humidity">Humidade</string>
+    <string name="wind">Vento</string>
+    <string name="sunrise">Nascer do sol</string>
+    <string name="sunset">Pôr do sol</string>
+    <string name="hourly_forecast">Previsão Horária</string>
+    <string name="no_location_set">Defina uma localização nas Definições para começar</string>
+
+    <!-- Forecast -->
+    <string name="no_forecast">Nenhuma previsão disponível</string>
+
+    <!-- Past Week -->
+    <string name="no_history">Nenhum histórico disponível</string>
+
+    <!-- Settings -->
+    <string name="temperature_unit">Unidade de Temperatura</string>
+    <string name="wind_speed_unit">Unidade de Velocidade do Vento</string>
+    <string name="theme">Tema</string>
+    <string name="language">Idioma</string>
+    <string name="location">Localização</string>
+    <string name="current_city">Atual: %s</string>
+    <string name="not_set">Não definido</string>
+    <string name="search_city">Pesquisar cidade</string>
+    <string name="use_gps">Usar GPS</string>
+    <string name="about">Sobre</string>
+    <string name="powered_by">Fornecido por Open-Meteo</string>
+    <string name="version">Weathr v1.0</string>
+    <string name="system_default">Padrão do sistema</string>
+    <string name="light">Claro</string>
+    <string name="dark">Escuro</string>
+
+    <!-- Temperature units -->
+    <string name="celsius">°C Celsius</string>
+    <string name="fahrenheit">°F Fahrenheit</string>
+
+    <!-- Wind units -->
+    <string name="kmh">km/h</string>
+    <string name="mph">mph</string>
+    <string name="ms">m/s</string>
+    <string name="knots">nós</string>
+
+    <!-- Languages -->
+    <string name="lang_en">English</string>
+    <string name="lang_pt">Português</string>
+
+    <!-- Search -->
+    <string name="search_city_title">Pesquisar Cidade</string>
+    <string name="city_name">Nome da cidade</string>
+    <string name="cancel">Cancelar</string>
+
+    <!-- Error -->
+    <string name="error_no_location">Nenhuma localização definida</string>
+    <string name="retry">Tentar novamente</string>
+
+    <!-- Loading -->
+    <string name="loading">A carregar…</string>
+
+    <!-- Welcome -->
+    <string name="welcome_message">Defina a sua localização para ver o tempo</string>
+    <string name="getting_location">A obter a sua localização…</string>
+    <string name="gps_current_location">Localização Atual</string>
+    <string name="gps_denied">Permissão de localização negada. Ative nas Definições ou procure uma cidade.</string>
+
+    <!-- Weather descriptions -->
+    <string name="wmo_clear">Limpo</string>
+    <string name="wmo_partly_cloudy">Parcialmente Nublado</string>
+    <string name="wmo_overcast">Nublado</string>
+    <string name="wmo_fog">Nevoeiro</string>
+    <string name="wmo_drizzle">Chuvisco</string>
+    <string name="wmo_freezing_drizzle">Chuvisco Congelante</string>
+    <string name="wmo_rain">Chuva</string>
+    <string name="wmo_freezing_rain">Chuva Congelante</string>
+    <string name="wmo_snow">Neve</string>
+    <string name="wmo_rain_showers">Aguaceiros</string>
+    <string name="wmo_snow_showers">Quedas de Neve</string>
+    <string name="wmo_thunderstorm">Trovoada</string>
+
+    <!-- Detail labels -->
+    <string name="uv_index">Índice UV</string>
+    <string name="precipitation">Precipitação</string>
+    <string name="app_description">Uma aplicação de meteorologia limpa e moderna alimentada pela Open-Meteo. Sem anúncios, sem rastreio, apenas o tempo.</string>
+</resources>
